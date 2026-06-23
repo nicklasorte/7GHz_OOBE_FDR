@@ -1,11 +1,8 @@
 function [FDR_dB,ED,VD,OTR,DeltaFreq,single_fdr_loss,trans_mask] = FDR_ModelII_vector_rev2(app,freq_sep,array_tx_rf,array_rx_if,array_tx_mask,array_rx_insert_loss,TXSlope,RXSlope,Delta_Freq_Step)
-% FDR_ModelII_app_vec  Vectorized FDR per ITU-R SM.337-6, Annex 1, eq.2.
-%   Loop-free drop-in equivalent of FDR_ModelII_app: identical signature and
-%   outputs, but the per-separation loop is replaced by a single cross-
-%   correlation. See the VECTORIZATION NOTE near the computation.
+%   Vectorized FDR per ITU-R SM.337-6, Annex 1, eq.2.
 %
 %   [FDR_dB,ED,VD,OTR,DeltaFreq,single_fdr_loss,trans_mask] = ...
-%       FDR_ModelII_app(app,freq_sep,array_tx_rf,array_rx_if, ...
+%       FDR_ModelII_vector_rev2(app,freq_sep,array_tx_rf,array_rx_if, ...
 %       array_tx_mask,array_rx_insert_loss,TXSlope,RXSlope,Delta_Freq_Step)
 %
 %   INPUT CONVENTION (the four data arrays):

@@ -28,8 +28,6 @@ array_rx_loss=fliplr(horzcat(0,0.1,3,6,40,60)); %%%%%%%dB Loss [placeholder]
 
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Calculate the OOBE
 [table_oobe]=calc_oobe_7ghz_rev1(app,rev,oobeSeg,band_mhz,center_freq,cond_pwr_dBm)
 data_header_oobe=table_oobe.Properties.VariableNames;
@@ -68,20 +66,35 @@ zero_idx=nearestpoint_app(app,0,DeltaFreq);
 array_fdr=horzcat(DeltaFreq(zero_idx:end)',FDR_dB(zero_idx:end));
 fdr_idx=nearestpoint_app(app,fdr_freq_separation,array_fdr(:,1));
 fdr_dB=array_fdr(fdr_idx,:);  %%%%%%Frequency, FDR Loss
-
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%FDR Plot
 % figure;
 % plot(FDR_dB)
 
-
+fdr_freq=abs(rx_freq_mhz-center_freq)
 figure;
 hold on;
 plot(array_fdr(:,1),array_fdr(:,2),'-b','LineWidth',2,'DisplayName','FDR Loss')
+xline(fdr_freq,'--r','LineWidth',3)
 legend('Location','northwest')
 title({strcat('FDR: Example Rx and Base Station')})
 grid on;
-xlabel('Frequency Offset [MHz]')
+xlabel('Frequency Offset Between Center Frequencies [MHz]')
 ylabel('FDR [dB]')
 filename1=strcat('FDR_',num2str(rev),'.png');
 saveas(gcf,char(filename1))
+
+
+end_clock=clock;
+total_clock=end_clock-top_start_clock;
+total_seconds=total_clock(6)+total_clock(5)*60+total_clock(4)*3600+total_clock(3)*86400;
+total_mins=total_seconds/60;
+total_hours=total_mins/60;
+if total_hours>1
+    strcat('Total Hours:',num2str(total_hours))
+elseif total_mins>1
+    strcat('Total Minutes:',num2str(total_mins))
+else
+    strcat('Total Seconds:',num2str(total_seconds))
+end
+'Done'
 
